@@ -27,11 +27,11 @@ class GameBoard():  # class untuk menghasilkan papan permainan
         self.posLst = []  # list dua dimensi yang digunakan untuk menyimpan informasi koordinat 'p1' dan 'p2' terletak
 
         self.canvas = Canvas(self.window, width=baris * self.size, height=kolom * self.size)
-        self.giliran = Label(self.infoFrame, text="Giliran", font="Times 15 bold")
+        self.currentstatus = Label(self.infoFrame, text="Giliran", font="Times 15 bold")
         self.labelGiliran = Label(self.infoFrame, text="Pemain 1", font="Calibri 13 ")
         self.canvas.pack()
         self.infoFrame.pack()
-        self.giliran.pack()
+        self.currentstatus.pack()
         self.labelGiliran.pack()
 
         # loop yang digunakan untuk membuat objek kotak sebesar self.size
@@ -210,6 +210,7 @@ class GameBoard():  # class untuk menghasilkan papan permainan
         #                              message="Selamat!, Pemain 1 Menang saat giliran ke " + str(
         #                                  self.counter) + ".")
         self.complete = True
+        self.currentstatus.config(text="Permainan Berakhir")
         self.labelGiliran.config(text="Pemain 1 Menang", font="Calibri 13 ")
         self.boardFill = [angka for angka in range(self.m * self.n)]
         self.fileRiwayat.write(
@@ -222,6 +223,7 @@ class GameBoard():  # class untuk menghasilkan papan permainan
         #                              message="Selamat!, Pemain 2 Menang saat giliran ke " + str(
         #                                  self.counter) + ".")
         self.complete = True
+        self.currentstatus.config(text="Permainan Berakhir")
         self.labelGiliran.config(text="Pemain 2 Menang", font="Calibri 13 ")
         self.boardFill = [angka for angka in range(self.m * self.n)]
         self.fileRiwayat.write(
@@ -232,6 +234,7 @@ class GameBoard():  # class untuk menghasilkan papan permainan
     def p1p2tie(self):
         # messagebox.showinfo(title="Game Over", message="Permainan selesai dengan keadaan seri!")
         self.complete = True
+        self.currentstatus.config(text="Permainan Berakhir")
         self.labelGiliran.config(text="Permainan Berakhir Seri", font="Calibri 13 ")
         self.boardFill = [angka for angka in range(self.m * self.n)]
         self.fileRiwayat.write("Permainan Seri")

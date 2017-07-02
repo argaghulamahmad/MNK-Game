@@ -8,6 +8,7 @@
 from GameMNK import *
 from win32api import GetSystemMetrics
 
+"""jalankan file ini di konsol untuk memulai MNK Game"""
 try:
     width = GetSystemMetrics(0)
     height = GetSystemMetrics(1)

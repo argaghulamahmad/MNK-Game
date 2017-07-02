@@ -1,7 +1,7 @@
 from GameHistory import *
 from GameBoard import *
 
-
+"""class yang menginisiasi menu utama MNK Game"""
 class GameMNK:
     def __init__(self, screenWidth, screenHeight):
         self.window = Tk()
@@ -96,6 +96,7 @@ class GameMNK:
         self.window.minsize(width=800, height=600)
         self.window.maxsize(width=self.screenWidth, height=self.screenHeight)
 
+    """method untuk memeriksa nilai m,n, dan k"""
     def checkInput(self):
         if (int(self.m.get()) != int(self.n.get())):
             messagebox.showwarning("Input Value M or N is different", "Nilai m atau n direkomendasikan sama.")

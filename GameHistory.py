@@ -1,9 +1,7 @@
 from tkinter import *
 
-
+"""class yang berkaitan dengan proses penulisan file riwayat permainan"""
 class GameHistory:
-    """Class untuk menampilkan riwayat permainan"""
-
     def __init__(self):
         self.window = Tk()
         self.window.title("Riwayat Permainan")

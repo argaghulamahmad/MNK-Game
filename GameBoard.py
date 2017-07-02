@@ -4,7 +4,7 @@ from numpy import *
 from math import *
 import time
 
-
+"""class yang berfungsi untuk menginisiasi papan permainan sesuai input yang diberikan dari class GameMNK"""
 class GameBoard():  # class untuk menghasilkan papan permainan
     def __init__(self, baris, kolom, syaratMenang, tilesize):
         self.window = Tk()
@@ -191,7 +191,6 @@ class GameBoard():  # class untuk menghasilkan papan permainan
             if (self.p1p2tie()): self.window.destroy()
 
     """method untuk meletakkan window di center of screen"""
-
     def centerofscreen(self, toplevel):
         toplevel.update_idletasks()
         w = toplevel.winfo_screenwidth()
@@ -201,6 +200,7 @@ class GameBoard():  # class untuk menghasilkan papan permainan
         y = h / 2 - size[1] / 2
         toplevel.geometry("%dx%d+%d+%d" % (size + (x, y)))
 
+    """method yang dilaksanakan saat p1 menang"""
     def p1win(self):
         result = messagebox.showinfo(title="Permainan Selesai",
                                      message="Selamat!, Pemain 1 Menang saat giliran ke " + str(
@@ -212,6 +212,7 @@ class GameBoard():  # class untuk menghasilkan papan permainan
         self.fileRiwayat.close()
         return result
 
+    """method yang dilaksanakan saat p2 menang"""
     def p2win(self):
         result = messagebox.showinfo(title="Permainan Selesai",
                                      message="Selamat!, Pemain 2 Menang saat giliran ke " + str(
@@ -223,6 +224,7 @@ class GameBoard():  # class untuk menghasilkan papan permainan
         self.fileRiwayat.close()
         return result
 
+    """method yang dilaksanakan saat keadaan seri"""
     def p1p2tie(self):
         result = messagebox.showinfo(title="Game Over", message="Permainan selesai dengan keadaan seri!")
         self.boardFill = [angka for angka in range(self.m * self.n)]

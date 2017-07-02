@@ -10,6 +10,7 @@ class GameBoard():  # class untuk menghasilkan papan permainan
         self.window = Tk()
         self.window.resizable(False, False)
         self.window.title("MNK Game")
+        self.window.iconbitmap(r'MNK-Game.ico')
 
         self.infoFrame = Frame(self.window)
 

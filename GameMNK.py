@@ -10,6 +10,7 @@ class GameMNK:
         self.screenHeight = screenHeight
         self.fixWindowSize()
         self.window.title(" MNK Game ")
+        self.window.iconbitmap(r'MNK-Game.ico')
 
         self.inputFrame = Frame(self.window)
         self.bttnFrame = Frame(self.window)

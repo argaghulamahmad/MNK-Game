@@ -62,13 +62,20 @@ class GameMNK:
 
     """method untuk menginisasi board"""
     def generateBoard(self):
+        if (self.checkInput()):
+            return
+
         tilesize = 0
         if (int(self.m.get()) <= 15 or int(self.n.get()) <= 15):
             tilesize = 37
         elif (int(self.m.get()) <= 30 or int(self.n.get()) <= 30):
             tilesize = 19
+        elif (int(self.m.get()) <= 40 or int(self.n.get()) <= 40):
+            tilesize = 14
+        elif (int(self.m.get()) <= 50 or int(self.n.get()) <= 50):
+            tilesize = 10
         else:
-            tilesize = 15
+            tilesize = 5
 
         try:
             self.GenerateBoard = GameBoard(int(self.m.get()), int(self.n.get()), int(self.k.get()), tilesize)
@@ -88,3 +95,14 @@ class GameMNK:
     def fixWindowSize(self):
         self.window.minsize(width=800, height=600)
         self.window.maxsize(width=self.screenWidth, height=self.screenHeight)
+
+    def checkInput(self):
+        if (int(self.m.get()) < 3 or int(self.n.get()) < 3):
+            messagebox.showwarning("Input Value M or N is too low", "Nilai m atau n Minimal adalah tiga")
+            return True
+        if (int(self.m.get()) > 250 or int(self.n.get()) > 110):
+            messagebox.showwarning("Input Value M or N is Overload", "Nilai m (max: 250) atau n (max:110) telah melampaui batas maksimum!")
+            return True
+        if (int(self.k.get()) > int(self.m.get()) or int(self.k.get()) > int(self.n.get())):
+            messagebox.showwarning("Input Value K is Overload", "Nilai k telah melampaui batas maksimum!")
+            return True

@@ -5,9 +5,10 @@ from math import *
 import time
 
 
-class GameBoard:  # class untuk menghasilkan papan permainan
-    def __init__(self, baris, kolom, syaratMenang):
+class GameBoard():  # class untuk menghasilkan papan permainan
+    def __init__(self, baris, kolom, syaratMenang, tilesize):
         self.window = Tk()
+        self.window.resizable(False, False)
         self.window.title("MNK Game")
 
         self.infoFrame = Frame(self.window)
@@ -17,9 +18,9 @@ class GameBoard:  # class untuk menghasilkan papan permainan
         self.m = baris
         self.n = kolom
         self.k = syaratMenang
+        self.size = tilesize
 
         self.counter = 0  # variabel untuk menentukan giliran main
-        self.size = 50  # variabel untuk menentukan ukuran objek kotak
         self.posLst = []  # list dua dimensi yang digunakan untuk menyimpan informasi koordinat 'p1' dan 'p2' terletak
 
         self.canvas = Canvas(self.window, width=baris * self.size, height=kolom * self.size)
@@ -48,6 +49,7 @@ class GameBoard:  # class untuk menghasilkan papan permainan
                                 "a")  # membuat fileRiwayatPermainan.txt untuk menyimpan informasi riwayat permainan
         self.fileRiwayat.write("\n" + "Permainan baru dimulai pada " + str(localtime) + "." + "\n")
 
+        self.centerofscreen(self.window)
         self.window.mainloop()
 
     def click(self, event):  # method yang digunakan untuk menjalankan perintah dari klik kiri mouse
@@ -188,10 +190,21 @@ class GameBoard:  # class untuk menghasilkan papan permainan
         if self.counter == (int(self.m) * int(self.n)):
             if (self.p1p2tie()): self.window.destroy()
 
+    """method untuk meletakkan window di center of screen"""
+
+    def centerofscreen(self, toplevel):
+        toplevel.update_idletasks()
+        w = toplevel.winfo_screenwidth()
+        h = toplevel.winfo_screenheight()
+        size = tuple(int(_) for _ in toplevel.geometry().split('+')[0].split('x'))
+        x = w / 2 - size[0] / 2
+        y = h / 2 - size[1] / 2
+        toplevel.geometry("%dx%d+%d+%d" % (size + (x, y)))
+
     def p1win(self):
         result = messagebox.showinfo(title="Permainan Selesai",
-                            message="Selamat!, Pemain 1 Menang saat giliran ke " + str(
-                                self.counter) + ".")
+                                     message="Selamat!, Pemain 1 Menang saat giliran ke " + str(
+                                         self.counter) + ".")
         self.labelGiliran.config(text="Pemain 1 Menang", font="Calibri 13 ")
         self.boardFill = [angka for angka in range(self.m * self.n)]
         self.fileRiwayat.write(
@@ -201,8 +214,8 @@ class GameBoard:  # class untuk menghasilkan papan permainan
 
     def p2win(self):
         result = messagebox.showinfo(title="Permainan Selesai",
-                            message="Selamat!, Pemain 2 Menang saat giliran ke " + str(
-                                self.counter) + ".")
+                                     message="Selamat!, Pemain 2 Menang saat giliran ke " + str(
+                                         self.counter) + ".")
         self.labelGiliran.config(text="Pemain 2 Menang", font="Calibri 13 ")
         self.boardFill = [angka for angka in range(self.m * self.n)]
         self.fileRiwayat.write(
@@ -216,4 +229,3 @@ class GameBoard:  # class untuk menghasilkan papan permainan
         self.fileRiwayat.write("Permainan Seri")
         self.fileRiwayat.close()
         return result
-

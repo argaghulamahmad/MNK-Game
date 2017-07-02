@@ -97,6 +97,9 @@ class GameMNK:
         self.window.maxsize(width=self.screenWidth, height=self.screenHeight)
 
     def checkInput(self):
+        if (int(self.m.get()) != int(self.n.get())):
+            messagebox.showwarning("Input Value M or N is different", "Nilai m atau n direkomendasikan sama.")
+            return True
         if (int(self.m.get()) < 3 or int(self.n.get()) < 3):
             messagebox.showwarning("Input Value M or N is too low", "Nilai m atau n Minimal adalah tiga")
             return True

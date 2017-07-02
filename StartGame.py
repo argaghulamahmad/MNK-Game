@@ -1,6 +1,7 @@
 # Nama Mahasiswa	: Arga Ghulam Ahmad
 # NPM Mahasiswa		: 1606821601
-# Kelas  		    : DDP1 Kelas A
+# Mata Kuliah       : Dasar Dasar Pemrograman 1
+# Kelas             : A
 # Tugas  		    : MNK Game
 # Tanggal Deadline	: 16 November 2016
 # Interpreter		: Python 3.5.2 (v3.5.2:4def2a2901a5, Jun 25 2016, 22:18:55)

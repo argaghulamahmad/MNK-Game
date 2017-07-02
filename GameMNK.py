@@ -20,18 +20,15 @@ class GameMNK:
         self.m = StringVar()
         self.n = StringVar()
         self.k = StringVar()
-        self.tilesize = StringVar()
 
         self.labelJudulPermainan = Label(self.window, text="MNK Game", font='times 42 bold')
         self.labelM = Label(self.inputFrame, text="M : ")
         self.labelN = Label(self.inputFrame, text="N : ")
         self.labelK = Label(self.inputFrame, text="K : ")
-        self.labelTilesize = Label(self.inputFrame, text="Tile Size : ")
 
         self.barisEnt = Entry(self.inputFrame, textvariable=self.m)
         self.kolomEnt = Entry(self.inputFrame, textvariable=self.n)
         self.syaratmenangEnt = Entry(self.inputFrame, textvariable=self.k)
-        self.tilesizeEnt = Entry(self.inputFrame, textvariable=self.tilesize)
 
         self.mulaiBttn = Button(self.window, text="Mulai Game", command=self.generateBoard)
         self.riwayatBttn = Button(self.bttnFrame, text="Riwayat", command=self.gameHistory)
@@ -46,9 +43,6 @@ class GameMNK:
         self.labelN.grid(row=2, column=1)
         self.kolomEnt.grid(row=2, column=2)
         self.labelK.grid(row=3, column=1)
-        self.tilesizeEnt.grid(row=4, column=2)
-        self.syaratmenangEnt.grid(row=4, column=1)
-        self.labelTilesize.grid(row=4, column=1)
         self.syaratmenangEnt.grid(row=3, column=2)
 
         self.riwayatBttn.grid(row=2, column=1)
@@ -68,8 +62,16 @@ class GameMNK:
 
     """method untuk menginisasi board"""
     def generateBoard(self):
+        tilesize = 0
+        if (int(self.m.get()) <= 15 or int(self.n.get()) <= 15):
+            tilesize = 37
+        elif (int(self.m.get()) <= 30 or int(self.n.get()) <= 30):
+            tilesize = 19
+        else:
+            tilesize = 15
+
         try:
-            self.GenerateBoard = GameBoard(int(self.m.get()), int(self.n.get()), int(self.k.get()), int(self.tilesize.get()))
+            self.GenerateBoard = GameBoard(int(self.m.get()), int(self.n.get()), int(self.k.get()), tilesize)
         except ValueError:
             messagebox.showwarning("Info", "Dimohon agar mengisi input dengan benar.")
 

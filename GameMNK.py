@@ -65,8 +65,9 @@ class GameMNK:
         if (self.checkInput()):
             return
 
-        tilesize = 0
-        if (int(self.m.get()) <= 15 or int(self.n.get()) <= 15):
+        if (int(self.m.get()) <= 5 or int(self.n.get()) <= 5):
+            tilesize = 60
+        elif (int(self.m.get()) <= 15 or int(self.n.get()) <= 15):
             tilesize = 37
         elif (int(self.m.get()) <= 30 or int(self.n.get()) <= 30):
             tilesize = 19
@@ -104,7 +105,7 @@ class GameMNK:
         if (int(self.m.get()) < 3 or int(self.n.get()) < 3):
             messagebox.showwarning("Input Value M or N is too low", "Nilai m atau n Minimal adalah tiga")
             return True
-        if (int(self.m.get()) > 250 or int(self.n.get()) > 110):
+        if (int(self.m.get()) > 110 or int(self.n.get()) > 110):
             messagebox.showwarning("Input Value M or N is Overload", "Nilai m (max: 250) atau n (max:110) telah melampaui batas maksimum!")
             return True
         if (int(self.k.get()) > int(self.m.get()) or int(self.k.get()) > int(self.n.get())):

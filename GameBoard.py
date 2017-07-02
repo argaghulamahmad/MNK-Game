@@ -95,14 +95,14 @@ class GameBoard():  # class untuk menghasilkan papan permainan
                 if self.posLst[i][j] == 'p1':
                     self.hitungKolomp1 += 1
                     if self.hitungKolomp1 == int(self.k):
-                        if (self.p1win()): self.window.destroy()
+                        self.p1win()
                 else:
                     self.hitungKolomp1 = 0
 
                 if self.posLst[i][j] == 'p2':
                     self.hitungKolomp2 += 1
                     if self.hitungKolomp2 == int(self.k):
-                        if (self.p2win()): self.window.destroy()
+                        self.p2win()
                 else:
                     self.hitungKolomp2 = 0
 
@@ -117,14 +117,14 @@ class GameBoard():  # class untuk menghasilkan papan permainan
                 if self.posLst[i][j] == 'p1':
                     self.hitungBarisp1 += 1
                     if self.hitungBarisp1 == int(self.k):
-                        if (self.p1win()): self.window.destroy()
+                        self.p1win()
                 else:
                     self.hitungBarisp1 = 0
 
                 if self.posLst[i][j] == 'p2':
                     self.hitungBarisp2 += 1
                     if self.hitungBarisp2 == int(self.k):
-                        if (self.p2win()): self.window.destroy()
+                        self.p2win()
                 else:
                     self.hitungBarisp2 = 0
 
@@ -146,14 +146,14 @@ class GameBoard():  # class untuk menghasilkan papan permainan
                 if lstDiagonal_normal[i][j] == 'p1':
                     self.hitungDiagonkananp1 += 1
                     if self.hitungDiagonkananp1 == (self.k):
-                        if (self.p1win()): self.window.destroy()
+                        self.p1win()
                 else:
                     self.hitungDiagonkananp1 = 0
 
                 if lstDiagonal_normal[i][j] == 'p2':
                     self.hitungDiagonkananp2 += 1
                     if self.hitungDiagonkananp2 == (self.k):
-                        if (self.p2win()): self.window.destroy()
+                        self.p2win()
                 else:
                     self.hitungDiagonkananp2 = 0
 
@@ -175,14 +175,14 @@ class GameBoard():  # class untuk menghasilkan papan permainan
                 if lstDiagonal_dibalik[i][j] == 'p1':
                     self.hitungDiagonkirip1 += 1
                     if self.hitungDiagonkirip1 == (self.k):
-                        if (self.p1win()): self.window.destroy()
+                        self.p1win()
                 else:
                     self.hitungDiagonkirip1 = 0
 
                 if lstDiagonal_dibalik[i][j] == 'p2':
                     self.hitungDiagonkirip2 += 1
                     if self.hitungDiagonkirip2 == (self.k):
-                        if (self.p2win()): self.window.destroy()
+                        self.p2win()
                 else:
                     self.hitungDiagonkirip2 = 0
 
@@ -202,32 +202,30 @@ class GameBoard():  # class untuk menghasilkan papan permainan
 
     """method yang dilaksanakan saat p1 menang"""
     def p1win(self):
-        result = messagebox.showinfo(title="Permainan Selesai",
-                                     message="Selamat!, Pemain 1 Menang saat giliran ke " + str(
-                                         self.counter) + ".")
+        # messagebox.showinfo(title="Permainan Selesai",
+        #                              message="Selamat!, Pemain 1 Menang saat giliran ke " + str(
+        #                                  self.counter) + ".")
         self.labelGiliran.config(text="Pemain 1 Menang", font="Calibri 13 ")
         self.boardFill = [angka for angka in range(self.m * self.n)]
         self.fileRiwayat.write(
             "Selamat!, Pemain 1 Menang saat giliran ke " + str(self.counter) + "." + "\n")
         self.fileRiwayat.close()
-        return result
 
     """method yang dilaksanakan saat p2 menang"""
     def p2win(self):
-        result = messagebox.showinfo(title="Permainan Selesai",
-                                     message="Selamat!, Pemain 2 Menang saat giliran ke " + str(
-                                         self.counter) + ".")
+        # messagebox.showinfo(title="Permainan Selesai",
+        #                              message="Selamat!, Pemain 2 Menang saat giliran ke " + str(
+        #                                  self.counter) + ".")
         self.labelGiliran.config(text="Pemain 2 Menang", font="Calibri 13 ")
         self.boardFill = [angka for angka in range(self.m * self.n)]
         self.fileRiwayat.write(
             "Selamat!, Pemain 2 Menang saat giliran ke " + str(self.counter) + "." + "\n")
         self.fileRiwayat.close()
-        return result
 
     """method yang dilaksanakan saat keadaan seri"""
     def p1p2tie(self):
-        result = messagebox.showinfo(title="Game Over", message="Permainan selesai dengan keadaan seri!")
+        # messagebox.showinfo(title="Game Over", message="Permainan selesai dengan keadaan seri!")
+        self.labelGiliran.config(text="Permainan Berakhir Seri", font="Calibri 13 ")
         self.boardFill = [angka for angka in range(self.m * self.n)]
         self.fileRiwayat.write("Permainan Seri")
         self.fileRiwayat.close()
-        return result

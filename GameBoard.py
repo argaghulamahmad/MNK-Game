@@ -1,12 +1,11 @@
 from tkinter import *
-from tkinter import messagebox
 from numpy import *
 from math import *
 import time
 
 """class yang berfungsi untuk menginisiasi papan permainan sesuai input yang diberikan dari class GameMNK"""
 class GameBoard():  # class untuk menghasilkan papan permainan
-    def __init__(self, baris, kolom, syaratMenang, tilesize):
+    def __init__(self, row, col, requiretowin, tilesize):
         self.window = Tk()
         self.window.resizable(False, False)
         self.window.title("MNK Game")
@@ -16,9 +15,9 @@ class GameBoard():  # class untuk menghasilkan papan permainan
 
         self.boardFill = []  # list yang digunakan untuk menyimpan informasi event klik mouse, agar lokasi yang telah diklik tidak dapat diklik kembali
 
-        self.m = baris
-        self.n = kolom
-        self.k = syaratMenang
+        self.m = row
+        self.n = col
+        self.k = requiretowin
         self.size = tilesize
 
         self.complete = False
@@ -26,19 +25,19 @@ class GameBoard():  # class untuk menghasilkan papan permainan
         self.counter = 0  # variabel untuk menentukan giliran main
         self.posLst = []  # list dua dimensi yang digunakan untuk menyimpan informasi koordinat 'p1' dan 'p2' terletak
 
-        self.canvas = Canvas(self.window, width=baris * self.size, height=kolom * self.size)
+        self.canvas = Canvas(self.window, width=row * self.size, height=col * self.size)
         self.currentstatus = Label(self.infoFrame, text="Giliran", font="Times 15 bold")
-        self.labelGiliran = Label(self.infoFrame, text="Pemain 1", font="Calibri 13 ")
+        self.turnLabel = Label(self.infoFrame, text="Pemain 1", font="Calibri 13 ")
         self.canvas.pack()
         self.infoFrame.pack()
         self.currentstatus.pack()
-        self.labelGiliran.pack()
+        self.turnLabel.pack()
 
         # loop yang digunakan untuk membuat objek kotak sebesar self.size
-        for i in range(baris):
+        for i in range(row):
             self.posLst.append(
                 [])  # list self.posLst merupakan list berdimensi dua yang digunakan untuk meletakkan informasi letak 'p1' dan 'p2'
-            for j in range(kolom):
+            for j in range(col):
                 self.posLst[i].append(j)
                 self.posLst[i][j] = 0
 
@@ -48,9 +47,9 @@ class GameBoard():  # class untuk menghasilkan papan permainan
                 self.canvas.tag_bind(self.rectangle, '<Button-1>', lambda event, arg=self.rectangle: self.click(arg))
 
         localtime = time.asctime(time.localtime(time.time()))  # meminta informasi waktu pada sistem
-        self.fileRiwayat = open("gamehistory.txt",
+        self.historyFile = open("gamehistory.txt",
                                 "a")  # membuat fileRiwayatPermainan.txt untuk menyimpan informasi riwayat permainan
-        self.fileRiwayat.write("\n" + "Permainan baru dimulai pada " + str(localtime) + "." + "\n")
+        self.historyFile.write("\n" + "Permainan baru dimulai pada " + str(localtime) + "." + "\n")
 
         self.centerofscreen(self.window)
         self.window.mainloop()
@@ -58,7 +57,7 @@ class GameBoard():  # class untuk menghasilkan papan permainan
     def click(self, event):  # method yang digunakan untuk menjalankan perintah dari klik kiri mouse
         if (not self.complete):
             if self.counter % 2 == 0:
-                self.fileRiwayat.write(
+                self.historyFile.write(
                     "Giliran Pemain 1" + " turn" + str(self.counter) + "." + "\n")  # tulis ke file riwayat
 
                 if event not in self.boardFill:
@@ -69,10 +68,10 @@ class GameBoard():  # class untuk menghasilkan papan permainan
                 else:
                     pass
 
-                self.labelGiliran.config(text="Pemain 2", font="Calibri 13 ")  # menampilkan giliran pemain
+                self.turnLabel.config(text="Pemain 2", font="Calibri 13 ")  # menampilkan giliran pemain
 
             else:
-                self.fileRiwayat.write("Giliran Pemain 2" + " turn" + str(self.counter) + "." + "\n")
+                self.historyFile.write("Giliran Pemain 2" + " turn" + str(self.counter) + "." + "\n")
 
                 if event not in self.boardFill:
                     self.canvas.itemconfig(event, fill='green')  # mengubah warna hijau untuk pemain 2
@@ -82,55 +81,55 @@ class GameBoard():  # class untuk menghasilkan papan permainan
                 else:
                     pass
 
-                self.labelGiliran.config(text="Pemain 1", font="Calibri 13 ")  # menampilkan giliran pemain
+                self.turnLabel.config(text="Pemain 1", font="Calibri 13 ")  # menampilkan giliran pemain
 
             for i in self.posLst:
                 print(i)
             print(" ")
 
             # cek 'p1' dan 'p2' secara horizontal
-            self.hitungKolomp1 = 0
-            self.hitungKolomp2 = 0
+            self.totalp1Col = 0
+            self.totalp2Col = 0
 
             for i in range((self.m)):
-                self.hitungKolomp1 = 0
-                self.hitungKolomp2 = 0
+                self.totalp1Col = 0
+                self.totalp2Col = 0
                 for j in range((self.n)):
                     if self.posLst[i][j] == 'p1':
-                        self.hitungKolomp1 += 1
-                        if self.hitungKolomp1 == int(self.k):
+                        self.totalp1Col += 1
+                        if self.totalp1Col == int(self.k):
                             self.p1win()
                     else:
-                        self.hitungKolomp1 = 0
+                        self.totalp1Col = 0
 
                     if self.posLst[i][j] == 'p2':
-                        self.hitungKolomp2 += 1
-                        if self.hitungKolomp2 == int(self.k):
+                        self.totalp2Col += 1
+                        if self.totalp2Col == int(self.k):
                             self.p2win()
                     else:
-                        self.hitungKolomp2 = 0
+                        self.totalp2Col = 0
 
                         # cek 'p1' dan 'p2' secara vertikal
-            self.hitungBarisp1 = 0
-            self.hitungBarisp2 = 0
+            self.totalp1Row = 0
+            self.totalp2Row = 0
 
             for j in range((self.m)):
-                self.hitungBarisp1 = 0
-                self.hitungBarisp2 = 0
+                self.totalp1Row = 0
+                self.totalp2Row = 0
                 for i in range((self.n)):
                     if self.posLst[i][j] == 'p1':
-                        self.hitungBarisp1 += 1
-                        if self.hitungBarisp1 == int(self.k):
+                        self.totalp1Row += 1
+                        if self.totalp1Row == int(self.k):
                             self.p1win()
                     else:
-                        self.hitungBarisp1 = 0
+                        self.totalp1Row = 0
 
                     if self.posLst[i][j] == 'p2':
-                        self.hitungBarisp2 += 1
-                        if self.hitungBarisp2 == int(self.k):
+                        self.totalp2Row += 1
+                        if self.totalp2Row == int(self.k):
                             self.p2win()
                     else:
-                        self.hitungBarisp2 = 0
+                        self.totalp2Row = 0
 
                         # List posisi normal 'p1' dan 'p2' secara diagonal
             lstDiagonal_normal = []
@@ -140,55 +139,55 @@ class GameBoard():  # class untuk menghasilkan papan permainan
             print(lstDiagonal_normal)
 
             # Cek posisi 'p1' dan 'p2' secara Diagonal Kanan
-            self.hitungDiagonkananp1 = 0
-            self.hitungDiagonkananp2 = 0
+            self.totalp1Rightdiag = 0
+            self.totalp2Rightdiag = 0
 
             for i in range(len(lstDiagonal_normal)):
-                self.hitungDiagonkananp1 = 0
-                self.hitungDiagonkananp2 = 0
+                self.totalp1Rightdiag = 0
+                self.totalp2Rightdiag = 0
                 for j in range(len(lstDiagonal_normal[i])):
                     if lstDiagonal_normal[i][j] == 'p1':
-                        self.hitungDiagonkananp1 += 1
-                        if self.hitungDiagonkananp1 == (self.k):
+                        self.totalp1Rightdiag += 1
+                        if self.totalp1Rightdiag == (self.k):
                             self.p1win()
                     else:
-                        self.hitungDiagonkananp1 = 0
+                        self.totalp1Rightdiag = 0
 
                     if lstDiagonal_normal[i][j] == 'p2':
-                        self.hitungDiagonkananp2 += 1
-                        if self.hitungDiagonkananp2 == (self.k):
+                        self.totalp2Rightdiag += 1
+                        if self.totalp2Rightdiag == (self.k):
                             self.p2win()
                     else:
-                        self.hitungDiagonkananp2 = 0
+                        self.totalp2Rightdiag = 0
 
                         # list posisi yang dibalik 'p1' dan 'p2' secara diagonal
-            lstDiagonal_dibalik = []
+            lstDiagonal_reversed = []
             for i in range(-(self.m), (self.m) + 1):
-                lstDiagonal_dibalik.append(diag(list(reversed(self.posLst)), k=i))
+                lstDiagonal_reversed.append(diag(list(reversed(self.posLst)), k=i))
 
-            print(lstDiagonal_dibalik)
+            print(lstDiagonal_reversed)
 
             # Cek posisi 'p1' dan 'p2' secara Diagonal kiri
-            self.hitungDiagonkirip1 = 0
-            self.hitungDiagonkirip2 = 0
+            self.totalp1Leftdiag = 0
+            self.totalp2Leftdiag = 0
 
-            for i in range(len(lstDiagonal_dibalik)):
-                self.hitungDiagonkirip1 = 0
-                self.hitungDiagonkirip2 = 0
-                for j in range(len(lstDiagonal_dibalik[i])):
-                    if lstDiagonal_dibalik[i][j] == 'p1':
-                        self.hitungDiagonkirip1 += 1
-                        if self.hitungDiagonkirip1 == (self.k):
+            for i in range(len(lstDiagonal_reversed)):
+                self.totalp1Leftdiag = 0
+                self.totalp2Leftdiag = 0
+                for j in range(len(lstDiagonal_reversed[i])):
+                    if lstDiagonal_reversed[i][j] == 'p1':
+                        self.totalp1Leftdiag += 1
+                        if self.totalp1Leftdiag == (self.k):
                             self.p1win()
                     else:
-                        self.hitungDiagonkirip1 = 0
+                        self.totalp1Leftdiag = 0
 
-                    if lstDiagonal_dibalik[i][j] == 'p2':
-                        self.hitungDiagonkirip2 += 1
-                        if self.hitungDiagonkirip2 == (self.k):
+                    if lstDiagonal_reversed[i][j] == 'p2':
+                        self.totalp2Leftdiag += 1
+                        if self.totalp2Leftdiag == (self.k):
                             self.p2win()
                     else:
-                        self.hitungDiagonkirip2 = 0
+                        self.totalp2Leftdiag = 0
 
                         # mengecek bila permainan seri
             if self.counter == (int(self.m) * int(self.n)):
@@ -211,11 +210,11 @@ class GameBoard():  # class untuk menghasilkan papan permainan
         #                                  self.counter) + ".")
         self.complete = True
         self.currentstatus.config(text="Permainan Berakhir")
-        self.labelGiliran.config(text="Pemain 1 Menang", font="Calibri 13 ")
+        self.turnLabel.config(text="Pemain 1 Menang", font="Calibri 13 ")
         self.boardFill = [angka for angka in range(self.m * self.n)]
-        self.fileRiwayat.write(
+        self.historyFile.write(
             "Selamat!, Pemain 1 Menang saat giliran ke " + str(self.counter) + "." + "\n")
-        self.fileRiwayat.close()
+        self.historyFile.close()
 
     """method yang dilaksanakan saat p2 menang"""
     def p2win(self):
@@ -224,18 +223,18 @@ class GameBoard():  # class untuk menghasilkan papan permainan
         #                                  self.counter) + ".")
         self.complete = True
         self.currentstatus.config(text="Permainan Berakhir")
-        self.labelGiliran.config(text="Pemain 2 Menang", font="Calibri 13 ")
+        self.turnLabel.config(text="Pemain 2 Menang", font="Calibri 13 ")
         self.boardFill = [angka for angka in range(self.m * self.n)]
-        self.fileRiwayat.write(
+        self.historyFile.write(
             "Selamat!, Pemain 2 Menang saat giliran ke " + str(self.counter) + "." + "\n")
-        self.fileRiwayat.close()
+        self.historyFile.close()
 
     """method yang dilaksanakan saat keadaan seri"""
     def p1p2tie(self):
         # messagebox.showinfo(title="Game Over", message="Permainan selesai dengan keadaan seri!")
         self.complete = True
         self.currentstatus.config(text="Permainan Berakhir")
-        self.labelGiliran.config(text="Permainan Berakhir Seri", font="Calibri 13 ")
+        self.turnLabel.config(text="Permainan Berakhir Seri", font="Calibri 13 ")
         self.boardFill = [angka for angka in range(self.m * self.n)]
-        self.fileRiwayat.write("Permainan Seri")
-        self.fileRiwayat.close()
+        self.historyFile.write("Permainan Seri")
+        self.historyFile.close()

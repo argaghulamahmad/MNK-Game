@@ -6,11 +6,11 @@ class GameHistory:
         self.window = Tk()
         self.window.title("Riwayat Permainan")
 
-        self.textRiwayat = Text(self.window)
+        self.historyText = Text(self.window)
 
-        fileRiwayat = open("gamehistory.txt", "r+")
-        self.textRiwayat.insert("1.0", fileRiwayat.read())
-        fileRiwayat.close()
+        historyFile = open("gamehistory.txt", "r+")
+        self.historyText.insert("1.0", historyFile.read())
+        historyFile.close()
 
-        self.textRiwayat.pack()
+        self.historyText.pack()
         self.window.mainloop()

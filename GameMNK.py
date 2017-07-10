@@ -15,39 +15,39 @@ class GameMNK:
         self.inputFrame = Frame(self.window)
         self.bttnFrame = Frame(self.window)
 
-        self.warna1 = "blue"
-        self.warna2 = "yellow"
+        self.color1 = "blue"
+        self.color2 = "yellow"
 
         self.m = StringVar()
         self.n = StringVar()
         self.k = StringVar()
 
-        self.labelJudulPermainan = Label(self.window, text="MNK Game", font='times 42 bold')
+        self.gametitleLabel = Label(self.window, text="MNK Game", font='times 42 bold')
         self.labelM = Label(self.inputFrame, text="M : ")
         self.labelN = Label(self.inputFrame, text="N : ")
         self.labelK = Label(self.inputFrame, text="K : ")
 
-        self.barisEnt = Entry(self.inputFrame, textvariable=self.m)
-        self.kolomEnt = Entry(self.inputFrame, textvariable=self.n)
-        self.syaratmenangEnt = Entry(self.inputFrame, textvariable=self.k)
+        self.rowEnt = Entry(self.inputFrame, textvariable=self.m)
+        self.colEnt = Entry(self.inputFrame, textvariable=self.n)
+        self.requiretowin = Entry(self.inputFrame, textvariable=self.k)
 
-        self.mulaiBttn = Button(self.window, text="Mulai Game", command=self.generateBoard)
-        self.riwayatBttn = Button(self.bttnFrame, text="Riwayat", command=self.gameHistory)
-        self.tentangBttn = Button(self.bttnFrame, text="Tentang", command=self.gameAbout)
+        self.startBttn = Button(self.window, text="Mulai Game", command=self.generateBoard)
+        self.historyBttn = Button(self.bttnFrame, text="Riwayat", command=self.gameHistory)
+        self.aboutBttn = Button(self.bttnFrame, text="Tentang", command=self.gameAbout)
 
-        self.labelJudulPermainan.pack(padx=5, pady=20)
+        self.gametitleLabel.pack(padx=5, pady=20)
         self.inputFrame.pack(padx=5, pady=100)
-        self.mulaiBttn.pack(padx=5, pady=50)
+        self.startBttn.pack(padx=5, pady=50)
         self.bttnFrame.pack(padx=5, pady=50)
         self.labelM.grid(row=1, column=1)
-        self.barisEnt.grid(row=1, column=2)
+        self.rowEnt.grid(row=1, column=2)
         self.labelN.grid(row=2, column=1)
-        self.kolomEnt.grid(row=2, column=2)
+        self.colEnt.grid(row=2, column=2)
         self.labelK.grid(row=3, column=1)
-        self.syaratmenangEnt.grid(row=3, column=2)
+        self.requiretowin.grid(row=3, column=2)
 
-        self.riwayatBttn.grid(row=2, column=1)
-        self.tentangBttn.grid(row=2, column=2)
+        self.historyBttn.grid(row=2, column=1)
+        self.aboutBttn.grid(row=2, column=2)
         self.centerofscreen(self.window)
         self.window.mainloop()
 
